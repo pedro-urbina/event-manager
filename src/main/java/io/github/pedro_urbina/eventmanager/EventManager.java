@@ -17,12 +17,23 @@ public class EventManager {
 
         while (scanner.hasNext()) {
             List<String> line = csvReader.parseLine(scanner.nextLine());
+
             if (rowIndex == 0) {
                 rowIndex++;
                 continue;
             }
-            System.out.println("Attendee [name=" + line.get(2) + "]");
+
+            System.out.println("Attendee [name=" + line.get(2) + " zipcode=" + cleanZipcode(line.get(9)) + "]");
         }
         scanner.close();
+    }
+
+    public static String cleanZipcode(String zipcode) {
+        // if zipcode 5 digits, assume correct
+        // if zipcode less than 5 digits, pad with zeroes in front
+        while (zipcode.length() < 5) {
+            zipcode = "0" + zipcode;
+        }
+        return zipcode;
     }
 }
